@@ -24,7 +24,7 @@ do
     Fluent:Notify({
         Title = "通知",
         Content = "执行成功",
-        SubContent = "SubContent", -- Optional
+        SubContent = "hi", -- Optional
         Duration = 5 -- Set to nil to make the notification not disappear
     })
 
