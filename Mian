@@ -35,23 +35,135 @@ Library:Notify{
     Duration = 5 -- Set to nil to make the notification not disappear
 }
 
-local Paragraph = Tabs.Main:CreateParagraph("Paragraph", {
-    Title = "Paragraph",
-    Content = "This is a paragraph.\nSecond line"
-})
+local Toggle = Tabs.Main:CreateToggle("MyToggle", {Title = "Toggle", Default = false })
 
-print(Paragraph.Value)
+Toggle:OnChanged(function()-- 自动飞行脚本 (无UI，执行即用) by DeepSeek Chat
+-- 控制方式:
+-- WASD: 前后左右移动
+-- 空格: 上升
+-- Shift: 下降
 
-Paragraph:SetValue("This paragraph text is changed!")
+local player = game:GetService("Players").LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
 
-print(Paragraph.Value)
+-- 飞行参数
+local flightSpeed = 50  -- 飞行速度
+local flying = true    -- 自动启用飞行
+local bodyGyro, bodyVelocity
 
-Tabs.Main:CreateParagraph("Aligned Paragraph", {
-    Title = "Paragraph",
-    Content = "This is a paragraph with a center alignment!",
-    TitleAlignment = "Middle",
-    ContentAlignment = Enum.TextXAlignment.Center
-})
+-- 启用飞行
+local function enableFlight()
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    humanoid.PlatformStand = true
+    
+    -- 创建陀螺仪控制旋转
+    bodyGyro = Instance.new("BodyGyro")
+    bodyGyro.P = 10000
+    bodyGyro.maxTorque = Vector3.new(20e5, 20e5, 20e5)
+    bodyGyro.cframe = character:WaitForChild("HumanoidRootPart").CFrame
+    bodyGyro.Parent = character:WaitForChild("HumanoidRootPart")
+    
+    -- 创建速度控制器
+    bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.maxForce = Vector3.new(20e5, 20e5, 20e5)
+    bodyVelocity.velocity = Vector3.new(0, 0, 0)
+    bodyVelocity.Parent = character:WaitForChild("HumanoidRootPart")
+    
+    print("自动飞行已启用")
+end
+
+-- 禁用飞行
+local function disableFlight()
+    if not flying then return end
+    
+    local character = player.Character
+    if character then
+        local humanoid = character:FindFirstChild("Humanoid")
+        if humanoid then
+            humanoid.PlatformStand = false
+        end
+        
+        local rootPart = character:FindFirstChild("HumanoidRootPart")
+        if rootPart then
+            local bg = rootPart:FindFirstChild("BodyGyro")
+            if bg then bg:Destroy() end
+            
+            local bv = rootPart:FindFirstChild("BodyVelocity")
+            if bv then bv:Destroy() end
+        end
+    end
+    
+    flying = false
+    print("飞行已禁用")
+end
+
+-- 飞行控制更新
+local function updateFlight(dt)
+    if not flying then return end
+    
+    local character = player.Character
+    if not character then return end
+    
+    local rootPart = character:FindFirstChild("HumanoidRootPart")
+    if not rootPart then return end
+    
+    -- 获取输入方向
+    local forward = UserInputService:IsKeyDown(Enum.KeyCode.W) and 1 or 0
+    local backward = UserInputService:IsKeyDown(Enum.KeyCode.S) and -1 or 0
+    local left = UserInputService:IsKeyDown(Enum.KeyCode.A) and -1 or 0
+    local right = UserInputService:IsKeyDown(Enum.KeyCode.D) and 1 or 0
+    local up = UserInputService:IsKeyDown(Enum.KeyCode.Space) and 1 or 0
+    local down = UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) and -1 or 0
+    
+    -- 计算移动方向
+    local moveDirection = (rootPart.CFrame.LookVector * (forward + backward)) + 
+                         (rootPart.CFrame.RightVector * (left + right)) + 
+                         (Vector3.new(0, 1, 0) * (up + down))
+    
+    -- 标准化并应用速度
+    if moveDirection.Magnitude > 0 then
+        moveDirection = moveDirection.Unit * flightSpeed
+    end
+    
+    -- 更新速度
+    if bodyVelocity then
+        bodyVelocity.velocity = moveDirection
+    end
+    
+    -- 更新旋转(跟随相机)
+    if bodyGyro then
+        local camera = workspace.CurrentCamera
+        if camera then
+            bodyGyro.cframe = CFrame.new(rootPart.Position, rootPart.Position + camera.CFrame.LookVector)
+        end
+    end
+end
+
+-- 初始化飞行
+player.CharacterAdded:Connect(function(character)
+    enableFlight()
+end)
+
+-- 如果已经有角色，立即启用飞行
+if player.Character then
+    enableFlight()
+end
+
+-- 连接更新
+RunService.Heartbeat:Connect(updateFlight)
+
+-- 控制台信息
+print("自动飞行脚本已加载")
+print("控制方式:")
+print("WASD - 移动")
+print("空格 - 上升")
+print("Shift - 下降")
+    print("Toggle changed:", Options.MyToggle.Value)
+end)
+
+Options.MyToggle:SetValue(false)
 
 Tabs.Main:CreateButton{
     Title = "Button",
