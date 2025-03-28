@@ -4,7 +4,7 @@ local InterfaceManager = loadstring(game:HttpGetAsync("https://raw.githubusercon
  
 local Window = Library:CreateWindow{
     Title = `土脚本 1.0`,
-    SubTitle = "by Actual Master Oogway",
+    SubTitle = "by 土",
     TabWidth = 160,
     Size = UDim2.fromOffset(830, 525),
     Resize = true, -- Resize this ^ Size according to a 1920x1080 screen, good for mobile users but may look weird on some devices
@@ -17,7 +17,7 @@ local Window = Library:CreateWindow{
 -- Fluent Renewed provides ALL 1544 Lucide 0.469.0 https://lucide.dev/icons/ Icons and ALL 9072 Phosphor 2.1.0 https://phosphoricons.com/ Icons for the tabs, icons are optional
 local Tabs = {
     Main = Window:CreateTab{
-        Title = "Main",
+        Title = "通用",
         Icon = "phosphor-users-bold"
     },
     Settings = Window:CreateTab{
@@ -29,15 +29,15 @@ local Tabs = {
 local Options = Library.Options
 
 Library:Notify{
-    Title = "Notification",
-    Content = "This is a notification",
-    SubContent = "SubContent", -- Optional
+    Title = "通知",
+    Content = "脚本执行成功",
+    SubContent = "", -- Optional
     Duration = 5 -- Set to nil to make the notification not disappear
 }
 
 local Paragraph = Tabs.Main:CreateParagraph("Paragraph", {
     Title = "Paragraph",
-    Content = "This is a paragraph.\nSecond line!"
+    Content = "This is a paragraph.\nSecond line"
 })
 
 print(Paragraph.Value)
