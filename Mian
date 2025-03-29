@@ -20,11 +20,6 @@ local Tabs = {
         Title = "公告",
         Icon = "phosphor-users-bold"
     },
-    Settings = Window:CreateTab{
-        Title = "Settings",
-        Icon = "settings"
-    }
-}
 
 local Paragraph = Tabs.Main:CreateParagraph("Paragraph", {
     Title = "警告",
