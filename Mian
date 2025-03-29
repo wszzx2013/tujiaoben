@@ -30,6 +30,10 @@ print(Paragraph.Value)
 
 local Tabs = {
     Main = Window:CreateTab{
+        Title = "公告",
+        Icon = "phosphor-users-bold"
+    },
+    Main = Window:CreateTab{
         Title = "通用",
         Icon = "phosphor-users-bold"
     },
@@ -38,6 +42,12 @@ local Tabs = {
         Icon = "settings"
     }
 }
+
+local Paragraph = Tabs.Main:CreateParagraph("Paragraph", {
+    Title = "警告",
+    Content = "被封号概不负责"
+})
+
 
 local Options = Library.Options
 
