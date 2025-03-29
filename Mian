@@ -36,23 +36,24 @@ Library:Notify{
 }
 
 Tabs.Main:CreateButton{
-    Title = "Button",
-    Description = "Very important button",
+    Title = "飞行",
+    Description = "飞行加ui",
     Callback = function()
         Window:Dialog{
-            Title = "Title",
-            Content = "This is a dialog",
+            Title = "",
+            Content = "",
             Buttons = {
                 {
-                    Title = "Confirm",
+                    Title = "取消",
                     Callback = function()
-                        print("Confirmed the dialog.")
+                        print("取消飞行")
                     end
                 },
                 {
-                    Title = "Cancel",
+                    Title = "确定",
                     Callback = function()
-                        print("Cancelled the dialog.")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/wszzx2013/fly/refs/heads/main/fly2.0"))()
+                        print("启用飞行")
                     end
                 }
             }
