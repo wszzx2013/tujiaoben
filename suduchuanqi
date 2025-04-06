@@ -1,3 +1,5 @@
+------------------速度传奇------------------
+
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 Rayfield:Notify({
@@ -137,10 +139,26 @@ local Toggle = Tab:CreateToggle({
 local AutoRedOrbButton = Tab:CreateButton({
    Name = "自动收集红球(可叠加)",
    Callback = function()
+   _G.Aotohongqiu = true
    while wait() do
    local args = {
     [1] = "collectOrb",
     [2] = "Red Orb",
+    [3] = "City"
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("rEvents"):WaitForChild("orbEvent"):FireServer(unpack(args))
+end
+   end,
+})
+
+local AutobaoshiButton = Tab:CreateButton({
+   Name = "自动收集宝石(可叠加)",
+   Callback = function()
+   while wait() do
+   local args = {
+    [1] = "collectOrb",
+    [2] = "Gem",
     [3] = "City"
 }
 
