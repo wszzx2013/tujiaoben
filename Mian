@@ -1,2 +1,2 @@
-if game.PlaceId == 3101667897 then
+if game.PlaceId = 3101667897 do
 loadstring(game:HttpGet("https://raw.githubusercontent.com/wszzx2013/tujiaoben/refs/heads/main/suduchuanqi"))()
