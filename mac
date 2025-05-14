@@ -9,6 +9,8 @@ main() {
     curl -s "https://git.raptor.fun/main/jq-macos-amd64" -o "./jq"
     chmod +x ./jq
 
+    echo -e "已去除卡密"
+
     echo -e "下载Roblox中..."
     [ -f ./RobloxPlayer.zip ] && rm ./RobloxPlayer.zip
     local robloxVersionInfo=$(curl -s "https://clientsettingscdn.roblox.com/v2/client-version/MacPlayer")
@@ -74,7 +76,7 @@ main() {
     echo -e "继续"
     echo -e "安装成功!"
     echo -e "制作者 by Nexus42"
-    echo -e "汉化者 by 土"
+    echo -e "汉化破解者 by 土"
     exit
 }
 
