@@ -2,10 +2,10 @@
 
 main() {
     clear
-    echo -e "欢迎下载MacSploit执行器"
+    echo -e "欢迎下载MacSploit注入器"
     echo -e "安装执行脚本 2.6"
 
-    echo -ne "下载中"
+    echo -ne "准备下载"
     curl -s "https://git.raptor.fun/main/jq-macos-amd64" -o "./jq"
     chmod +x ./jq
     
@@ -77,12 +77,12 @@ main() {
     rm ./RobloxPlayer.zip
     echo -e "继续"
 
-    echo -e "Downloading MacSploit..."
+    echo -e "下载MacSploit中..."
     curl "https://git.raptor.fun/main/macsploit.zip" -o "./MacSploit.zip"
 
     echo -n "安装MacSploit中... "
     unzip -o -q "./MacSploit.zip"
-    echo -e "Done."
+    echo -e "继续"
 
     echo -n "更新Dylib..."
     if [ "$version" != "$robloxVersion" ] && [ "$mChannel" == "preview" ]
@@ -93,7 +93,7 @@ main() {
     fi
     
     echo -e " 继续"
-    echo -e "放入位置 Roblox..."
+    echo -e "把资源放入Roblox..."
     mv ./macsploit.dylib "/Applications/Roblox.app/Contents/MacOS/macsploit.dylib"
     ./insert_dylib "/Applications/Roblox.app/Contents/MacOS/macsploit.dylib" "/Applications/Roblox.app/Contents/MacOS/RobloxPlayer" --strip-codesig --all-yes
     mv "/Applications/Roblox.app/Contents/MacOS/RobloxPlayer_patched" "/Applications/Roblox.app/Contents/MacOS/RobloxPlayer"
@@ -115,7 +115,8 @@ main() {
     
     rm ./jq
     echo -e "继续"
-    echo -e "安装成功! 制作者 by Nexus42!"
+    echo -e "安装成功!"
+    echo -e "制作者 by Nexus42"
     echo -e "汉化者 by 土"
     exit
 }
